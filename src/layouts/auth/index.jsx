@@ -1,9 +1,10 @@
 import { Link, Navigate } from 'react-router-dom';
 import FixedPlugin from '@/components/fixedPlugin/FixedPlugin';
 import Login from '@/pages/Login';
+import Cookies from 'js-cookie';
 
 export default function Auth() {
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = Cookies.get('access_token');
 
   if (accessToken) {
     return <Navigate to="/" />;

@@ -6,6 +6,7 @@ import { BsArrowBarUp } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import { RiMoonFill, RiSunFill } from 'react-icons/ri';
 import { IoMdNotificationsOutline, IoMdInformationCircleOutline } from 'react-icons/io';
+import Cookies from 'js-cookie';
 
 import Dropdown from '@/components/dropdown';
 import navbarimage from '@/assets/img/layout/Navbar.png';
@@ -15,7 +16,7 @@ import { Context } from '@/utils/context';
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = useContext(Context);
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = Cookies.get('access_token');
 
   const toggleDarkMode = () => {
     if (darkmode) {
@@ -30,7 +31,7 @@ const Navbar = (props) => {
   };
 
   const Logout = () => {
-    localStorage.removeItem('access_token');
+    Cookies.remove('access_token');
     window.location = '/login';
   };
 

@@ -3,6 +3,7 @@ import InputField from '@/components/fields/InputField';
 import Cookies from 'js-cookie';
 import Checkbox from '@/components/checkbox';
 import axios from 'axios';
+import customAxios from '@/utils/customAxios';
 
 const Login = () => {
 
@@ -13,7 +14,7 @@ const Login = () => {
     const data = { email, password };
 
       try {
-          const response = await axios.post(`http://localhost:8080/api/users/login`, data);
+          const response = await customAxios.post(`http://localhost:8080/api/users/login`, data);
 
           if (response.status === 200) {
               // Use Cookies to set the JWT
