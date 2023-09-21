@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Context } from '@/utils/context';
 
-import { router } from './routes';
+import Admin from '@/layouts/admin';
+import Home from '@/pages/Home';
+import Auth from '@/layouts/auth';
 
 function App() {
   const [darkmode, setDarkmode] = useState(false);
@@ -20,7 +22,17 @@ function App() {
 
   return (
     <Context.Provider value={[darkmode, setDarkmode]}>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Admin />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/tickets" element={<Home />} />
+            <Route path="/users" element={<Home />} />
+            <Route path="/departments" element={<Home />} />
+          </Route>
+          <Route path="/login" element={<Auth />} />
+        </Routes>
+      </BrowserRouter>
     </Context.Provider>
   );
 }

@@ -15,18 +15,24 @@ import { Context } from '@/utils/context';
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = useContext(Context);
+  const accessToken = localStorage.getItem('access_token');
 
   const toggleDarkMode = () => {
     if (darkmode) {
       document.body.classList.remove('dark');
-      localStorage.theme = 'light'
+      localStorage.theme = 'light';
       setDarkmode(false);
     } else {
       document.body.classList.add('dark');
-      localStorage.theme = 'dark'
+      localStorage.theme = 'dark';
       setDarkmode(true);
     }
-  }
+  };
+
+  const Logout = () => {
+    localStorage.removeItem('access_token');
+    window.location = '/login';
+  };
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
@@ -140,10 +146,7 @@ const Navbar = (props) => {
             </a>
           </div>
         </Dropdown>
-        <div
-          className="cursor-pointer text-gray-600"
-          onClick={toggleDarkMode}
-        >
+        <div className="cursor-pointer text-gray-600" onClick={toggleDarkMode}>
           {darkmode ? (
             <RiSunFill className="h-4 w-4 text-gray-600 dark:text-white" />
           ) : (
@@ -167,9 +170,11 @@ const Navbar = (props) => {
               <a href=" " className="mt-3 text-sm text-gray-800 dark:text-white hover:dark:text-white">
                 Newsletter Settings
               </a>
-              <a href=" " className="mt-3 text-sm font-medium text-red-500 hover:text-red-500">
-                Log Out
-              </a>
+              {accessToken && (
+                <a href="#" onClick={Logout} className="mt-3 text-sm font-medium text-red-500 hover:text-red-500">
+                  Log Out
+                </a>
+              )}
             </div>
           </div>
         </Dropdown>

@@ -1,26 +1,30 @@
-// Chakra Imports
-// Custom Icons
-import React from "react";
+import React, { useContext } from "react";
 
 import { RiMoonFill, RiSunFill } from "react-icons/ri";
+import { Context } from "@/utils/context";
+
+
 export default function FixedPlugin(props) {
   const { ...rest } = props;
-  const [darkmode, setDarkmode] = React.useState(
-    document.body.classList.contains("dark")
-  );
+
+  const [darkmode, setDarkmode] = useContext(Context);
+
+  const toggleDarkMode = () => {
+    if (darkmode) {
+      document.body.classList.remove('dark');
+      localStorage.theme = 'light'
+      setDarkmode(false);
+    } else {
+      document.body.classList.add('dark');
+      localStorage.theme = 'dark'
+      setDarkmode(true);
+    }
+  }
 
   return (
     <button
-      className="border-px fixed bottom-[30px] right-[35px] !z-[99] flex h-[60px] w-[60px] items-center justify-center rounded-full border-[#6a53ff] bg-gradient-to-br from-brandLinear to-blueSecondary p-0"
-      onClick={() => {
-        if (darkmode) {
-          document.body.classList.remove("dark");
-          setDarkmode(false);
-        } else {
-          document.body.classList.add("dark");
-          setDarkmode(true);
-        }
-      }}
+      className="fixed bottom-[30px] right-[35px] !z-[99] flex h-[60px] w-[60px] items-center justify-center rounded-full bg-gradient-to-br from-orange-300 to-orange-600 p-0"
+      onClick={toggleDarkMode}
       {...rest}
     >
       {/* // left={document.documentElement.dir === "rtl" ? "35px" : ""}
