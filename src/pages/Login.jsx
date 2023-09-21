@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import InputField from '@/components/fields/InputField';
+import Cookies from 'js-cookie';
 import Checkbox from '@/components/checkbox';
 import axios from 'axios';
 
@@ -9,13 +10,14 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const authenticate = async () => {
-      const data = { email, password };
+    const data = { email, password };
 
       try {
           const response = await axios.post(`http://localhost:8080/api/users/login`, data);
 
           if (response.status === 200) {
-              localStorage.setItem('access_token', response.data.jwtToken);
+              // Use Cookies to set the JWT
+              Cookies.set('access_token', response.data.jwtToken, { expires: 7 });
               window.location = '/';
           }
       } catch (error) {
