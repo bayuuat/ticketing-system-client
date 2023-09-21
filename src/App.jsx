@@ -6,6 +6,7 @@ import { Context } from '@/utils/context';
 import Admin from '@/layouts/admin';
 import Home from '@/pages/Home';
 import Auth from '@/layouts/auth';
+import ProtectedRoute from '@/components/protectedRoute/ProtectedRoute';
 
 function App() {
   const [darkmode, setDarkmode] = useState(false);
@@ -24,12 +25,10 @@ function App() {
     <Context.Provider value={[darkmode, setDarkmode]}>
       <BrowserRouter>
         <Routes>
-          <Route element={<Admin />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/tickets" element={<Home />} />
-            <Route path="/users" element={<Home />} />
-            <Route path="/departments" element={<Home />} />
-          </Route>
+          <Route path="/" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+          <Route path="/tickets" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/users" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/departments" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/login" element={<Auth />} />
         </Routes>
       </BrowserRouter>
