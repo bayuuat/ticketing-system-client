@@ -4,9 +4,13 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Context } from '@/utils/context';
 
 import Admin from '@/layouts/admin';
-import Home from '@/pages/Home';
+import Analytics from '@/pages/Analytics';
 import Auth from '@/layouts/auth';
 import ProtectedRoute from '@/components/protectedRoute/ProtectedRoute';
+import Ticket from '@/pages/Tickets';
+import User from '@/pages/Users';
+import Department from '@/pages/Departments';
+import Tables from '@/pages/tables';
 
 function App() {
   const [darkmode, setDarkmode] = useState(false);
@@ -26,10 +30,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ProtectedRoute><Admin /></ProtectedRoute>}>
-            <Route index element={<Home />} />
-            <Route path="/tickets" element={<Home />} />
-            <Route path="/users" element={<Home />} />
-            <Route path="/departments" element={<Home />} />
+            <Route index element={<Analytics />} />
+            <Route path="/tickets" element={<Ticket />} />
+            <Route path="/users" element={<User />} />
+            <Route path="/departments" element={<Department />} />
+            <Route path="/tables" element={<Tables />} />
           </Route>
           <Route path="/login" element={<Auth />} />
         </Routes>

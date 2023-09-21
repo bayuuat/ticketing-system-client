@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const customAxios = axios.create({
-  baseURL: 'http://localhost:8080/api', // Your API base URL
+  baseURL: import.meta.env.VITE_BASE_URL
 });
 
 customAxios.interceptors.response.use(

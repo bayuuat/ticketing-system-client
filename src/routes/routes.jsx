@@ -1,6 +1,6 @@
 import React from "react";
 
-import Home from "@/pages/Home";
+import Home from "@/pages/Analytics";
 
 import {
   MdHome,
@@ -9,7 +9,7 @@ import {
   MdPerson,
   MdLock,
 } from "react-icons/md";
-import { BiSolidBox, BiSolidHome, BiSolidMessage, BiSolidUser } from "react-icons/bi";
+import { BiSolidBox, BiSolidHome, BiSolidMessage, BiSolidUser, BiTable } from "react-icons/bi";
 
 const routes = [
   {
@@ -38,6 +38,13 @@ const routes = [
     layout: "/",
     path: "departments",
     icon: <BiSolidBox className="h-6 w-6" />,
+    component: <Home />,
+  },
+  {
+    name: "Contoh Table",
+    layout: "/",
+    path: "tables",
+    icon: <BiTable className="h-6 w-6" />,
     component: <Home />,
   },
   {
