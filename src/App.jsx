@@ -25,10 +25,12 @@ function App() {
     <Context.Provider value={[darkmode, setDarkmode]}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-          <Route path="/tickets" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/users" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/departments" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/" element={<ProtectedRoute><Admin /></ProtectedRoute>}>
+            <Route index element={<Home />} />
+            <Route path="/tickets" element={<Home />} />
+            <Route path="/users" element={<Home />} />
+            <Route path="/departments" element={<Home />} />
+          </Route>
           <Route path="/login" element={<Auth />} />
         </Routes>
       </BrowserRouter>
