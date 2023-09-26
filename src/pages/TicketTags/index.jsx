@@ -1,23 +1,27 @@
-import Modal from '@/components/modal';
-import DevTableTemplate from '@/components/table/DevelopmentTable';
-import ModalCreate from '@/pages/Departments/components/ModalCreate';
-import customAxios from '@/utils/customAxios';
 import { useEffect, useState } from 'react';
+import customAxios from '@/utils/customAxios';
+import DevTableTemplate from '@/components/table/DevelopmentTable';
+import ModalCreate from '@/pages/TicketTags/components/ModalCreate';
 
 const columnData = [
   {
     Header: 'ID',
-    accessor: 'departmentID',
+    accessor: 'id',
+    width: '10%',
+  },
+  {
+    Header: 'TAG NAME',
+    accessor: 'tagName',
     width: '20%',
   },
   {
-    Header: 'NAME',
+    Header: 'DEPARTMENT',
     accessor: 'departmentName',
-    width: '50%',
+    width: '20%',
   },
   {
-    Header: 'USERS',
-    accessor: 'users',
+    Header: 'DATE',
+    accessor: 'createdDate',
     width: '20%',
   },
   {
@@ -27,15 +31,14 @@ const columnData = [
   },
 ];
 
-const Department = () => {
+const TicketTags = () => {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [selectedData, setSelectedData] = useState({});
 
   const getTicketTagList = async () => {
     try {
-      const response = await customAxios.get('/departments/list');
-
+      const response = await customAxios.get(`/ticket-tag/list`);
       if (response.status === 200) {
         setData(response.data);
       }
@@ -48,6 +51,10 @@ const Department = () => {
     }
   };
 
+  useEffect(() => {
+    getTicketTagList();
+  }, []);
+
   const handleCloseModal = () => {
     setOpenModal(false);
   };
@@ -57,19 +64,20 @@ const Department = () => {
     setSelectedData(data)
   };
 
-  useEffect(() => {
-    getTicketTagList();
-  }, []);
-
   return (
     <>
-      <p>{openModal}</p>
-      <div className="mt-5">
-        <DevTableTemplate title={'Deparments Table'} columnsData={columnData} tableData={data} buttonText={"Create New Department"} onClickEdit={handleOpenModal} />
+      <div className="mt-5 ">
+        <DevTableTemplate
+          title={'Ticket Tag Table'}
+          columnsData={columnData}
+          tableData={data}
+          buttonText={'Create New Department'}
+          onClickEdit={handleOpenModal}
+        />
       </div>
-      <ModalCreate open={openModal} onClose={handleCloseModal} data={selectedData}/>
+      <ModalCreate open={openModal} onClose={handleCloseModal} data={selectedData} />
     </>
   );
 };
 
-export default Department;
+export default TicketTags;

@@ -11,6 +11,7 @@ import Ticket from '@/pages/Tickets';
 import User from '@/pages/Users';
 import Department from '@/pages/Departments';
 import Tables from '@/pages/tables';
+import TicketTags from '@/pages/TicketTags';
 
 function App() {
   const [darkmode, setDarkmode] = useState(false);
@@ -32,11 +33,13 @@ function App() {
           <Route path="/" element={<ProtectedRoute><Admin /></ProtectedRoute>}>
             <Route index element={<Analytics />} />
             <Route path="/tickets" element={<Ticket />} />
+            <Route path="/ticket-tags" element={<TicketTags />} />
             <Route path="/users" element={<User />} />
             <Route path="/departments" element={<Department />} />
             <Route path="/tables" element={<Tables />} />
           </Route>
           <Route path="/login" element={<Auth />} />
+          <Route path="/public" element={<Auth />} />
         </Routes>
       </BrowserRouter>
     </Context.Provider>
