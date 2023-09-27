@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import InputField from '@/components/fields/InputField';
 import Cookies from 'js-cookie';
 import customAxios from '@/utils/customAxios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const authenticate = async (e) => {
     e.preventDefault();
@@ -17,7 +20,7 @@ const Login = () => {
       if (response.status === 200) {
         // Use Cookies to set the JWT
         Cookies.set('access_token', response.data.jwtToken, { expires: 7 });
-        window.location = '/';
+        navigate('/');
       }
     } catch (error) {
       if (error.response && error.response.data) {

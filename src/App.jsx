@@ -11,6 +11,7 @@ import Ticket from '@/pages/Tickets';
 import User from '@/pages/Users';
 import Department from '@/pages/Departments';
 import Tables from '@/pages/tables';
+import WebSocketTest from '@/websocketTest/WebSocketTest';
 
 function App() {
   const [darkmode, setDarkmode] = useState(false);

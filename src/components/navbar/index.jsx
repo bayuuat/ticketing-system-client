@@ -12,6 +12,7 @@ import Dropdown from '@/components/dropdown';
 import navbarimage from '@/assets/img/layout/Navbar.png';
 import avatar from '@/assets/img/avatars/avatar4.png';
 import { Context } from '@/utils/context';
+import customAxios from '@/utils/customAxios';
 
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
@@ -31,9 +32,25 @@ const Navbar = (props) => {
   };
 
   const Logout = () => {
-    Cookies.remove('access_token');
-    window.location = '/login';
-  };
+    if (accessToken) {
+      customAxios.post('/users/logout', {}, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(() => {
+        Cookies.remove('access_token');
+        window.location = '/login';
+      })
+      .catch(error => {
+        console.error('Error during logout:', error);
+        Cookies.remove('access_token');
+        window.location = '/login';
+      });
+    } else {
+      window.location = '/login';
+    }
+  };  
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">

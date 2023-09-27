@@ -4,9 +4,24 @@ import Login from '@/pages/Login';
 import Cookies from 'js-cookie';
 
 export default function Auth() {
+  const isTokenExpired = (token) => {
+    if (!token) return true;
+
+    const tokenParts = token.split('.');
+    
+    const decodedPayload = JSON.parse(atob(tokenParts[1]));
+    
+    const currentTime = Math.floor(Date.now() / 1000);
+    
+    return currentTime > decodedPayload.exp;
+  }
+
   const accessToken = Cookies.get('access_token');
 
-  if (accessToken) {
+  if (isTokenExpired(accessToken)) {
+    Cookies.remove('access_token');
+  }
+  else {
     return <Navigate to="/" />;
   }
 
