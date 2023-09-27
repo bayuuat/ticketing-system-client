@@ -3,13 +3,9 @@ import React from "react";
 import Home from "@/pages/Analytics";
 
 import {
-  MdHome,
-  MdOutlineShoppingCart,
-  MdBarChart,
-  MdPerson,
   MdLock,
 } from "react-icons/md";
-import { BiSolidBox, BiSolidHome, BiSolidMessage, BiSolidUser, BiTable } from "react-icons/bi";
+import { BiSolidBox, BiSolidHome, BiSolidMessage, BiSolidTag, BiSolidUser, BiTable} from "react-icons/bi";
 
 const routes = [
   {
@@ -24,6 +20,13 @@ const routes = [
     layout: "/",
     path: "tickets",
     icon: <BiSolidMessage className="h-6 w-6" />,
+    component: <Home />,
+  },
+  {
+    name: "Ticket Tags",
+    layout: "/",
+    path: "ticket-tags",
+    icon: <BiSolidTag className="h-6 w-6" />,
     component: <Home />,
   },
   {
