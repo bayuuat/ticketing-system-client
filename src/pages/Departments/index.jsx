@@ -1,8 +1,9 @@
-import Modal from '@/components/modal';
+import { useEffect, useState } from 'react';
+
 import DevTableTemplate from '@/components/table/DevelopmentTable';
 import ModalCreate from '@/pages/Departments/components/ModalCreate';
 import customAxios from '@/utils/customAxios';
-import { useEffect, useState } from 'react';
+import ModalDelete from '@/components/modal/ModalDelete';
 
 const columnData = [
   {
@@ -30,14 +31,32 @@ const columnData = [
 const Department = () => {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [selectedData, setSelectedData] = useState({});
 
   const getTicketTagList = async () => {
     try {
-      const response = await customAxios.get('/departments/list');
-
+      const response = await customAxios.get('/departments/view');
       if (response.status === 200) {
         setData(response.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        alert(error.response.data);
+      } else {
+        console.error(error);
+      }
+    }
+  };
+
+  const deleteDepartment = async () => {
+    try {
+      const response = await customAxios.delete(`/departments/delete/${selectedData.departmentID}`);
+
+      if (response.status === 204) {
+        alert('Success Deleting Data');
+        getTicketTagList();
+        handleCloseModalDelete();
       }
     } catch (error) {
       if (error.response && error.response.data) {
@@ -54,7 +73,16 @@ const Department = () => {
 
   const handleOpenModal = (data) => {
     setOpenModal(true);
-    setSelectedData(data)
+    setSelectedData(data);
+  };
+
+  const handleCloseModalDelete = () => {
+    setOpenModalDelete(false);
+  };
+
+  const handleOpenModalDelete = (data) => {
+    setOpenModalDelete(true);
+    setSelectedData(data);
   };
 
   useEffect(() => {
@@ -63,11 +91,18 @@ const Department = () => {
 
   return (
     <>
-      <p>{openModal}</p>
       <div className="mt-5">
-        <DevTableTemplate title={'Deparments Table'} columnsData={columnData} tableData={data} buttonText={"Create New Department"} onClickEdit={handleOpenModal} />
+        <DevTableTemplate
+          title={'Deparments Table'}
+          columnsData={columnData}
+          tableData={data}
+          buttonText={'Create New Department'}
+          onClickEdit={handleOpenModal}
+          onClickDelete={handleOpenModalDelete}
+        />
       </div>
-      <ModalCreate open={openModal} onClose={handleCloseModal} data={selectedData}/>
+      <ModalCreate open={openModal} onClose={handleCloseModal} data={selectedData} refetch={getTicketTagList} />
+      <ModalDelete open={openModalDelete} onClose={handleCloseModalDelete} selectedData={selectedData?.departmentName} onDelete={deleteDepartment} />
     </>
   );
 };
