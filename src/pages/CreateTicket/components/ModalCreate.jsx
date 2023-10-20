@@ -10,12 +10,11 @@ const ModalCreate = ({ open, onClose, data }) => {
   const [form, setForm] = useState({ tagName: '', departmentName: '' });
   const [options, setOptions] = useState([]);
 
-  const getTicketTagList = async () => {
+  const getDepartmentList = async () => {
     try {
       const response = await customAxios.get('/departments/list');
 
       if (response.status === 200) {
-        console.log(response.data);
         const mappedData = response.data.map((data) => {
           return {
             value: data.departmentID,
@@ -34,11 +33,10 @@ const ModalCreate = ({ open, onClose, data }) => {
   };
 
   useEffect(() => {
-    getTicketTagList();
+    getDepartmentList();
   }, []);
 
   useEffect(() => {
-    console.log(data);
     if (data === 'new') {
       setForm({ tagName: '', departmentName: '' });
     } else if (data) {

@@ -1,6 +1,16 @@
-import React, { Children } from 'react';
+import React, { useEffect } from 'react';
 
-const Modal = ({open, onClose, children}) => {
+const Modal = ({ open, onClose, children }) => {
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '17px';
+    } else {
+      document.body.style.overflow = 'auto';
+      document.body.style.paddingRight = '0';
+    }
+  }, [open]);
+
   return (
     open && (
       <div className="fixed flex justify-center items-center inset-0 z-50 overflow-hidden">

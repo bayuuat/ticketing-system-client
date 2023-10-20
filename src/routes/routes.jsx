@@ -1,60 +1,48 @@
-import React from "react";
+import React from 'react';
 
-import Home from "@/pages/Analytics";
+import Home from '@/pages/Analytics';
 
-import {
-  MdLock,
-} from "react-icons/md";
-import { BiSolidBox, BiSolidHome, BiSolidMessage, BiSolidTag, BiSolidUser, BiTable} from "react-icons/bi";
+import { BiSolidBox, BiSolidHome, BiSolidMessage, BiSolidPaperPlane, BiSolidTag, BiSolidUser } from 'react-icons/bi';
 
 const routes = [
   {
-    name: "Main Dashboard",
-    layout: "/",
-    path: "",
+    name: 'Main Dashboard',
+    layout: '/admin',
+    path: '',
+    access: 'manager',
     icon: <BiSolidHome className="h-6 w-6" />,
     component: <Home />,
   },
   {
-    name: "Tickets",
-    layout: "/",
-    path: "tickets",
+    name: 'Tickets',
+    layout: '/admin',
+    path: '/tickets',
     icon: <BiSolidMessage className="h-6 w-6" />,
     component: <Home />,
   },
   {
-    name: "Ticket Tags",
-    layout: "/",
-    path: "ticket-tags",
+    name: 'Ticket Tags',
+    layout: '/admin',
+    path: '/ticket-tags',
+    access: 'manager',
     icon: <BiSolidTag className="h-6 w-6" />,
     component: <Home />,
   },
   {
-    name: "Users",
-    layout: "/",
-    path: "users",
+    name: 'Users',
+    layout: '/admin',
+    path: '/users',
+    access: 'manager',
     icon: <BiSolidUser className="h-6 w-6" />,
     component: <Home />,
   },
   {
-    name: "Departments",
-    layout: "/",
-    path: "departments",
+    name: 'Departments',
+    layout: '/admin',
+    path: '/departments',
+    access: 'manager',
     icon: <BiSolidBox className="h-6 w-6" />,
     component: <Home />,
   },
-  {
-    name: "Contoh Table",
-    layout: "/",
-    path: "tables",
-    icon: <BiTable className="h-6 w-6" />,
-    component: <Home />,
-  },
-  {
-    name: "Sign In",
-    layout: "/login",
-    icon: <MdLock className="h-6 w-6" />,
-    component: <Home />,
-  }
 ];
 export default routes;

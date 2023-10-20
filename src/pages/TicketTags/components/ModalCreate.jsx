@@ -6,6 +6,7 @@ import { BiSolidBox } from 'react-icons/bi';
 import customAxios from '@/utils/customAxios';
 import TextField from '@/components/fields/TextField';
 import { ComboboxDemo } from '@/components/SearchSelect/new';
+import { useToast } from '@/components/shadcn/components/ui/use-toast';
 
 const formBody = { tagName: '', description: '', departmentName: null, departmentID: null };
 
@@ -13,6 +14,7 @@ const ModalCreate = ({ open, onClose, data, refetch }) => {
   const [form, setForm] = useState(formBody);
   const [options, setOptions] = useState([]);
   const [word, setWord] = useState('');
+  const {toast} = useToast()
 
   const getTicketTagList = async () => {
     try {
@@ -44,6 +46,9 @@ const ModalCreate = ({ open, onClose, data, refetch }) => {
       if (response.status === 200) {
         onClose();
         refetch();
+        toast({
+          title: "Success Creating Data!",
+        })
       }
     } catch (error) {
       if (error.response && error.response.data) {
@@ -62,6 +67,9 @@ const ModalCreate = ({ open, onClose, data, refetch }) => {
       if (response.status === 200) {
         onClose();
         refetch();
+        toast({
+          title: "Success Updating Data!",
+        })
       }
     } catch (error) {
       if (error.response && error.response.data) {

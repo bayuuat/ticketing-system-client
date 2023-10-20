@@ -2,6 +2,7 @@ import { Link, Navigate } from 'react-router-dom';
 import FixedPlugin from '@/components/fixedPlugin/FixedPlugin';
 import Login from '@/pages/Login';
 import Cookies from 'js-cookie';
+import { Toaster } from '@/components/shadcn/components/ui/toaster';
 
 export default function Auth() {
   const accessToken = Cookies.get('access_token');
@@ -33,7 +34,9 @@ export default function Auth() {
                 <div className="absolute right-0 hidden h-full min-h-screen md:block lg:w-[49vw] 2xl:w-[44vw]">
                   <div
                     className="absolute flex h-full w-full items-end justify-center bg-cover bg-center lg:rounded-bl-[120px] xl:rounded-bl-[200px]"
-                    style={{ backgroundImage: `url(https://cdn.dribbble.com/userupload/5181457/file/original-bbc8e2a4697d62062ab377360075abbe.jpg?resize=1200x1200)` }}
+                    style={{
+                      backgroundImage: `url(https://cdn.dribbble.com/userupload/5181457/file/original-bbc8e2a4697d62062ab377360075abbe.jpg?resize=1200x1200)`,
+                    }}
                   />
                 </div>
               </div>
@@ -41,6 +44,7 @@ export default function Auth() {
           </div>
         </main>
       </div>
+      <Toaster />
     </div>
   );
 }

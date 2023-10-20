@@ -3,6 +3,7 @@ import customAxios from '@/utils/customAxios';
 import DevTableTemplate from '@/components/table/DevelopmentTable';
 import ModalCreate from '@/pages/TicketTags/components/ModalCreate';
 import ModalDelete from '@/components/modal/ModalDelete';
+import { useToast } from '@/components/shadcn/components/ui/use-toast';
 
 const columnData = [
   {
@@ -37,6 +38,7 @@ const TicketTags = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [selectedData, setSelectedData] = useState({});
+  const {toast} = useToast()
 
   const getTicketTagList = async () => {
     try {
@@ -58,7 +60,9 @@ const TicketTags = () => {
       const response = await customAxios.delete(`/ticket-tag/delete/${selectedData.tagID}`);
 
       if (response.status === 204) {
-        alert('Success Deleting Data');
+        toast({
+          title: "Success Deleting Data!",
+        })
         getTicketTagList();
         handleCloseModalDelete();
       }
