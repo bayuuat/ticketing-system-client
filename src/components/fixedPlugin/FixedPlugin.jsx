@@ -23,7 +23,7 @@ export default function FixedPlugin(props) {
 
   return (
     <button
-      className="fixed bottom-[30px] right-[35px] !z-[99] flex h-[60px] w-[60px] items-center justify-center rounded-full bg-gradient-to-br from-orange-300 to-orange-600 p-0"
+      className="fixed bottom-[25px] right-[25px] !z-[99] flex h-[60px] w-[60px] items-center justify-center rounded-full bg-gradient-to-br from-orange-300 to-orange-600 p-0"
       onClick={toggleDarkMode}
       {...rest}
     >

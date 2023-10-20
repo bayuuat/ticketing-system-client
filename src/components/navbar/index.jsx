@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { FiAlignJustify } from 'react-icons/fi';
 import { BsArrowBarUp } from 'react-icons/bs';
@@ -12,11 +12,13 @@ import Dropdown from '@/components/dropdown';
 import navbarimage from '@/assets/img/layout/Navbar.png';
 import avatar from '@/assets/img/avatars/avatar4.png';
 import { Context } from '@/utils/context';
+import customAxios from '@/utils/customAxios';
 
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = useContext(Context);
   const accessToken = Cookies.get('access_token');
+  const navigate = useNavigate();
 
   const toggleDarkMode = () => {
     if (darkmode) {
@@ -30,23 +32,27 @@ const Navbar = (props) => {
     }
   };
 
-  const Logout = () => {
-    Cookies.remove('access_token');
-    window.location = '/login';
+  const Logout = async () => {
+    try {
+      const response = await customAxios.post(`/users/logout`);
+
+      if (response.status === 200) {
+        Cookies.remove('access_token');
+        navigate('/login');
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        alert(error.response.data);
+      } else {
+        alert('Failed to authenticate');
+      }
+    }
   };
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="ml-[6px]">
-        <div className="h-6 w-[224px] pt-1">
-          <a className="text-sm font-normal text-navy-700 hover:underline dark:text-white dark:hover:text-white" href=" ">
-            Pages
-            <span className="mx-1 text-sm text-navy-700 hover:text-navy-700 dark:text-white"> / </span>
-          </a>
-          <Link className="text-sm font-normal capitalize text-navy-700 hover:underline dark:text-white dark:hover:text-white" to="#">
-            {brandText}
-          </Link>
-        </div>
+        <div className="h-6 w-[224px] pt-1"></div>
         <p className="shrink text-[33px] capitalize text-navy-700 dark:text-white">
           <Link to="#" className="font-bold capitalize hover:text-navy-700 dark:hover:text-white">
             {brandText}

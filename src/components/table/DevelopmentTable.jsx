@@ -7,7 +7,7 @@ import Card from '@/components/card';
 import ButtonCreate from '@/components/table/ButtonCreate';
 
 const DevTableTemplate = (props) => {
-  const { title, buttonText, columnsData, tableData, onClickEdit } = props;
+  const { title, buttonText, columnsData, tableData, onClickEdit, onClickDelete } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -76,7 +76,7 @@ const DevTableTemplate = (props) => {
                           <button onClick={() => onClickEdit(cell.row.original)} className="w-7 h-7 bg-orange-500 rounded-md p-1 text-white">
                             <BiSolidEdit className="m-auto" />
                           </button>
-                          <button className="w-7 h-7 bg-orange-500 rounded-md p-1 text-white">
+                          <button onClick={() => onClickDelete(cell.row.original)} className="w-7 h-7 bg-orange-500 rounded-md p-1 text-white">
                             <BiSolidTrash className="m-auto" />
                           </button>
                         </div>

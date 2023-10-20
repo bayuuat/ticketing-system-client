@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import InputField from '@/components/fields/InputField';
 import Cookies from 'js-cookie';
 import customAxios from '@/utils/customAxios';
+import jwtDecode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/components/shadcn/components/ui/use-toast';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const authenticate = async (e) => {
     e.preventDefault();
@@ -16,14 +21,26 @@ const Login = () => {
 
       if (response.status === 200) {
         // Use Cookies to set the JWT
-        Cookies.set('access_token', response.data.jwtToken, { expires: 7 });
-        window.location = '/';
+        const token = response.data.jwtToken;
+        const decoded = jwtDecode(token);
+        Cookies.set('access_token', token, { expires: decoded.exp });
+        Cookies.set('role_id', decoded.roleID);
+        Cookies.set('user_id', decoded.userID);
+        Cookies.set('department_id', decoded.departmentID);
+        decoded.roleID == 1 ? navigate('/admin') : navigate('/admin/tickets');
       }
     } catch (error) {
       if (error.response && error.response.data) {
-        alert(error.response.data);
+        toast({
+          variant: 'destructive',
+          title: error.response.data,
+        });
       } else {
-        alert('Failed to authenticate');
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: 'Failed to authenticate!',
+        });
       }
     }
   };
@@ -40,11 +57,12 @@ const Login = () => {
             variant="auth"
             extra="mb-4"
             label="Email*"
-            placeholder="user@mail.com"
+            placeholder="Type your email..."
             id="email"
-            type="text"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
 
           {/* Password */}
@@ -52,16 +70,17 @@ const Login = () => {
             variant="auth"
             extra="mb-4"
             label="Password*"
-            placeholder="Min. 6 characters"
+            placeholder="Type your password..."
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
 
           <button
             className="linear mt-5 w-full rounded-xl bg-orange-500 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-orange-600 active:bg-orange-700 dark:bg-orange-400 dark:text-white dark:hover:bg-orange-300 dark:active:bg-orange-200"
-            onClick={authenticate}
+            type="submit"
           >
             Sign In
           </button>
