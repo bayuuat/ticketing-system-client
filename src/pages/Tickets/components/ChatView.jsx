@@ -64,16 +64,28 @@ const ChatView = ({ selectedData, messages, connected }) => {
           <div className={`flex flex-wrap gap-4 ${customer && 'float-right'} mb-4`}>
             {attachment.map((message, index) =>
               !message.fileType.startsWith('image/') ? (
-                <div className="w-32 h-32 flex flex-col items-center p-2 shadow-md rounded-md border bg-gray-50 dark:bg-navy-800 dark:border-gray-900" key={index}>
+                <a
+                  href={message.attachmentPath}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-32 h-32 flex flex-col items-center p-2 shadow-md rounded-md border bg-gray-50 dark:bg-navy-800 dark:border-gray-900"
+                  key={index}
+                >
                   <div className="grow flex items-center">
                     <BiSolidFileBlank className="w-16 h-16 text-gray-300 dark:opacity-60" />
                   </div>
                   <span className="h-1/5 text-center w-full truncate text-xs">{message.fileName}</span>
-                </div>
+                </a>
               ) : (
-                <div className="w-32 h-32 shadow-md rounded-md border dark:border-gray-900" key={index}>
+                <a
+                  href={message.attachmentPath}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-32 h-32 shadow-md rounded-md border dark:border-gray-900"
+                  key={index}
+                >
                   <img className="w-full h-full rounded-md mr-4 object-cover" src={message.attachmentPath} alt={`Preview ${index}`} />
-                </div>
+                </a>
               )
             )}
           </div>
