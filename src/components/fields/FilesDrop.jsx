@@ -65,6 +65,16 @@ const FileDropZone = ({ selectedFile, setSelectedFile }) => {
     setSelectedFile(e.target.files);
   };
 
+  const removeItem = (indexToRemove) => {
+    console.log(indexToRemove);
+    const prevUpdatedItems = preview.filter((_, index) => index !== indexToRemove);
+    const fileUpdatedItems = { ...selectedFile };
+    delete fileUpdatedItems[indexToRemove];
+    console.log(fileUpdatedItems);
+    setPreview(prevUpdatedItems);
+    // setSelectedFile(fileUpdatedItems);
+  };
+
   return (
     <>
       {!!preview.length ? (
@@ -72,14 +82,30 @@ const FileDropZone = ({ selectedFile, setSelectedFile }) => {
           {!!preview &&
             preview.map((preview, index) =>
               preview instanceof File ? (
-                <div className="w-44 h-44 flex flex-col items-center p-2 shadow-md rounded-md border dark:border-gray-900" key={index}>
+                <div className="w-44 h-44 relative flex flex-col items-center p-2 shadow-md rounded-md border dark:border-gray-900" key={index}>
+                  <button
+                    className="absolute w-6 h-6 text-center -right-2 -top-2 bg-red-500 rounded-full"
+                    onClick={() => {
+                      removeItem(index);
+                    }}
+                  >
+                    X
+                  </button>
                   <div className="grow flex items-center">
                     <BiSolidFileBlank className="w-24 h-24 text-gray-300 dark:opacity-60" />
                   </div>
                   <span className="h-1/5 text-center w-full truncate">{preview.name}</span>
                 </div>
               ) : (
-                <div className="w-44 h-44 shadow-md rounded-md border dark:border-gray-900" key={index}>
+                <div className="w-44 h-44 relative shadow-md rounded-md border dark:border-gray-900" key={index}>
+                  <button
+                    className="absolute w-6 h-6 text-center -right-2 -top-2 bg-red-500 rounded-full"
+                    onClick={() => {
+                      removeItem(index);
+                    }}
+                  >
+                    X
+                  </button>
                   <img className="w-full h-full rounded-md mr-4 object-cover" src={preview} alt={`Preview ${index}`} />
                 </div>
               )

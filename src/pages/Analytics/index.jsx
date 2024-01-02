@@ -13,7 +13,6 @@ import SimpleLineChart from '@/pages/Analytics/components/SimpleLineChart';
 import DailyResponseChart from '@/pages/Analytics/components/DailyResponseChart';
 import { useGetDepartment, useGetUsers } from '@/pages/Analytics/variables/selectApiCall';
 import BarChartNew from '@/pages/Analytics/components/BarChart';
-import DevTableTemplate from '@/components/table/DevelopmentTable';
 import ComplexTable from '@/pages/Analytics/components/ComplexTable';
 
 const initialParam = {

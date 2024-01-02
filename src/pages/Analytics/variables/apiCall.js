@@ -57,7 +57,7 @@ export const getCountTicketByUser = async (param) => {
 export const getResponseTimePerUser = async (param) => {
   try {
     const response = await customAxios.get(`tickets/response-time-department-per-user/${param.departmentID}`, {
-      params: { start_date: param.start_date, end_date: param.end_date, granularity: 'daily' },
+      params: { start_date: param.start_date, end_date: param.end_date, granularity: 'monthly' },
     });
 
     if (response.status === 200) {

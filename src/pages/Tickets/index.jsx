@@ -69,7 +69,7 @@ const Ticket = () => {
                 key={item.ticketNumber}
                 className={`${
                   activeRoute(item.ticketNumber) ? 'border-opacity-100' : 'border-opacity-0'
-                } py-3 px-2 mb-2 w-full rounded-md bg-gray-100 dark:bg-navy-700 border border-orange-500`}
+                } py-3 px-2 mb-2 w-full rounded-md bg-gray-100 dark:bg-navy-700 border border-orange-500 text-left`}
                 onClick={() => handleClick(item)}
               >
                 {item.ticketNumber}

@@ -12,6 +12,7 @@ import customAxios from '@/utils/customAxios';
 import FooterHome from '@/pages/CreateTicket/components/FooterHome';
 import NavbarHome from '@/pages/CreateTicket/components/NavbarHome';
 import SeveritySelect from '@/pages/CreateTicket/components/SeveritySelect';
+import { useNavigate } from 'react-router-dom';
 
 const formBody = {
   subject: '',
@@ -28,6 +29,7 @@ const CreateTicket = () => {
   const customer = Cookies.get('user_detail');
   const customerData = JSON.parse(customer);
   const { toast } = useToast();
+  const { navigate } = useNavigate();
 
   useEffect(() => {
     // getTicketTagList();
@@ -74,6 +76,7 @@ const CreateTicket = () => {
             description: 'Your tickets will be handled.',
           });
           setForm(formBody);
+          navigate('/ticket');
         } else {
           console.error('Unexpected response status for file upload:', uploadFile.status);
           throw new Error('File upload failed');
@@ -94,7 +97,7 @@ const CreateTicket = () => {
   };
 
   const postTicket = async (id) => {
-    const submitForm = { ticketContent: form.body, ticketTagID: 34, severityID: form.severity, customerID: id, ticketAttachmentPath: '/' };
+    const submitForm = { ticketContent: form.content, ticketTagID: 34, severityID: form.severity, customerID: id, ticketAttachmentPath: '/' };
     try {
       const response = await customAxios.post('/customers/save-ticket', submitForm);
 
